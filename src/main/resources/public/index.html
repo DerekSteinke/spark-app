@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to send a message to the server.</p>
+
+<button onclick="buttonPress()">Press Me!</button>
+
+<p id="buttonPressResponse"></p>
+
+<script>
+function buttonPress() {
+
+	var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function() {
+    	if (this.readyState == 4 && this.status == 200) {
+    	var date = new Date();
+  		var utcDate = date.toUTCString();
+      	document.getElementById("buttonPressResponse").innerHTML = "Your message was sent to the server at " + date +". This is the response: " + 
+     	 this.responseText;
+   	 	}
+	}
+	
+	xhr.open("POST", "http://localhost:5678/stringmodifier",true);
+	//xhr.setRequestHeader("Content-type", "text/html")
+    var textPrompt = prompt("Enter a message to send to the server:", "Type here!");
+	xhr.send(textPrompt);
+
+}
+
+</script>
+
+</body>
+</html>
